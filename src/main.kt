@@ -1,10 +1,11 @@
 import org.jsoup.Jsoup
 
 fun main(){
-    val url = "https://dl.google.com/dl/android/maven2/androidx/core/group-index.xml"
 
-    val result = Jsoup.connect(url).execute()
-    val dom = result.parse().allElements
+    urls.forEach { url ->
+        val result = Jsoup.connect(url).execute()
+        val dom = result.parse().allElements
+
         dom.forEach {
             val tag = it.tagName()
             if (tag.contains("-ktx")){
@@ -14,4 +15,16 @@ fun main(){
                 println("last version of $tag is $lastVersion")
             }
         }
+    }
 }
+
+val urls = listOf(
+    "https://dl.google.com/dl/android/maven2/androidx/core/group-index.xml",
+    "https://dl.google.com/dl/android/maven2/androidx/fragment/group-index.xml",
+    "https://dl.google.com/dl/android/maven2/androidx/palette/group-index.xml",
+    "https://dl.google.com/dl/android/maven2/androidx/sqlite/group-index.xml",
+    "https://dl.google.com/dl/android/maven2/androidx/collection/group-index.xml",
+    "https://dl.google.com/dl/android/maven2/androidx/lifecycle/group-index.xml",
+    "https://dl.google.com/dl/android/maven2/android/arch/navigation/group-index.xml",
+    "https://dl.google.com/dl/android/maven2/android/arch/work/group-index.xml"
+)
